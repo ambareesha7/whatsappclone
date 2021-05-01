@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/screens/chats_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
   }
 
   @override
@@ -23,9 +24,35 @@ class _HomePageState extends State<HomePage>
         // centerTitle: true,
         actions: [
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
+          PopupMenuButton(onSelected: (value) {
+            print(value);
+          }, itemBuilder: (BuildContext context) {
+            return [
+              PopupMenuItem(
+                child: Text("New group"),
+                value: "New group",
+              ),
+              PopupMenuItem(
+                child: Text("New broadcast"),
+                value: "New broadcast",
+              ),
+              PopupMenuItem(
+                child: Text("Whatsapp Web"),
+                value: "Whatsapp Web",
+              ),
+              PopupMenuItem(
+                child: Text("Starred messages"),
+                value: "Starred messages",
+              ),
+              PopupMenuItem(
+                child: Text("Settings"),
+                value: "Settings",
+              ),
+            ];
+          })
         ],
         bottom: TabBar(
+          indicatorColor: Colors.white,
           controller: _tabController,
           tabs: [
             Tab(
@@ -38,7 +65,13 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       body: TabBarView(
-        children: [],
+        controller: _tabController,
+        children: [
+          Text("camera"),
+          ChatsPage(),
+          Text("status"),
+          Text("calls"),
+        ],
       ),
     );
   }
